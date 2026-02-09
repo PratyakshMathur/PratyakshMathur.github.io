@@ -10,7 +10,7 @@ class SQLPortfolioApp {
     init() {
         this.setupEventListeners();
         this.updateLineNumbers();
-        this.executeQuery('SELECT * FROM experience;', false); // Load default
+        this.executeQuery('SELECT * FROM experience;', false);
     }
 
     setupEventListeners() {
@@ -18,7 +18,11 @@ class SQLPortfolioApp {
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const table = e.target.dataset.table;
-                this.switchTab(table);
+                if (table === 'resume') {
+                    this.showResume();
+                } else {
+                    this.switchTab(table);
+                }
             });
         });
 
@@ -54,6 +58,14 @@ class SQLPortfolioApp {
                 this.executeQuery(query);
             }
         });
+
+        // Resume modal close
+        const closeResumeBtn = document.getElementById('close-resume');
+        if (closeResumeBtn) {
+            closeResumeBtn.addEventListener('click', () => {
+                this.hideResume();
+            });
+        }
 
         // Theme toggle
         document.getElementById('theme-toggle').addEventListener('click', () => {
@@ -244,6 +256,7 @@ class SQLPortfolioApp {
                     <strong>Example queries:</strong><br>
                     • SELECT * FROM experience;<br>
                     • SELECT name, proficiency FROM skills;<br>
+                    • SELECT * FROM skills WHERE proficiency = 'Advanced';<br>
                     • INSERT INTO contact (name, email, message) VALUES ('', '', '');
                 </div>
             </div>
@@ -293,7 +306,8 @@ class SQLPortfolioApp {
                     <ul>
                         <li><code>SELECT * FROM experience;</code> - View my work history</li>
                         <li><code>SELECT * FROM projects;</code> - See my projects</li>
-                        <li><code>SELECT * FROM skills;</code> - Check my technical skills</li>
+                        <li><code>SELECT name, proficiency FROM skills;</code> - Skills summary</li>
+                        <li><code>SELECT * FROM skills WHERE proficiency = 'Advanced';</code> - Advanced skills only</li>
                         <li><code>INSERT INTO contact ...</code> - Get in touch</li>
                     </ul>
                 </div>
@@ -302,6 +316,32 @@ class SQLPortfolioApp {
         document.getElementById('result-count').textContent = '';
         this.setStatus('Editor cleared', 'info');
         this.updateLineNumbers();
+    }
+
+    showResume() {
+        const modal = document.getElementById('resume-modal');
+        if (modal) {
+            modal.style.display = 'flex';
+        }
+        
+        // Update active tab
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.querySelector('[data-table="resume"]').classList.add('active');
+    }
+
+    hideResume() {
+        const modal = document.getElementById('resume-modal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+        
+        // Reset to experience tab
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.querySelector('[data-table="experience"]').classList.add('active');
     }
 
     updateLineNumbers() {
@@ -319,7 +359,6 @@ class SQLPortfolioApp {
     }
 
     toggleTheme() {
-        // For now, just show a message. Theme toggle can be implemented later
         this.setStatus('Theme toggle feature coming soon!', 'info');
     }
 }
