@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pratyaksh Mathur - SQL Portfolio Console</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-table="experience">Experience</button>
+            <button class="tab-btn" data-table="projects">Projects</button>
+            <button class="tab-btn" data-table="skills">Skills</button>
+            <button class="tab-btn" data-table="education">Education</button>
+            <button class="tab-btn" data-table="contact">Contact</button>
+        </nav>
+
+        <!-- SQL Editor Console -->
+        <div class="sql-console">
+            <div class="console-header">
+                <div class="console-title">SQL Portfolio Console</div>
+                <div class="console-controls">
+                    <button class="control-btn" id="theme-toggle" title="Toggle Theme">🌙</button>
+                </div>
+            </div>
+            
+            <div class="editor-section">
+                <div class="editor-header">
+                    <span class="editor-label">Query Editor</span>
+                    <div class="editor-utils">
+                        <select id="query-template" class="query-dropdown">
+                            <option value="">-- Select Template --</option>
+                            <option value="SELECT * FROM experience;">View All Experience</option>
+                            <option value="SELECT * FROM projects;">View All Projects</option>
+                            <option value="SELECT * FROM skills;">View All Skills</option>
+                            <option value="SELECT * FROM education;">View All Education</option>
+                            <option value="SELECT * FROM contact;">View Contact Info</option>
+                            <option value="INSERT INTO contact (name, email, message) VALUES ('', '', '');">Send Message</option>
+                            <option value="SELECT skills.name FROM skills JOIN experience ON skills.id = experience.skill_ids;">Skills Used in Work</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="editor-container">
+                    <div class="line-numbers">
+                        <div class="line-number">1</div>
+                    </div>
+                    <textarea 
+                        id="sql-editor" 
+                        placeholder="-- Welcome to Pratyaksh's Portfolio Database
+-- Try: SELECT * FROM experience;
+-- Or click a tab above to auto-run queries"
+                        spellcheck="false">SELECT * FROM experience;</textarea>
+                </div>
+                
+                <div class="editor-footer">
+                    <button id="execute-btn" class="execute-btn">▶ Execute</button>
+                    <button id="clear-btn" class="clear-btn">🗑 Clear</button>
+                    <div class="status-indicator">
+                        <span id="status-text">Ready</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section">
+                <div class="results-header">
+                    <span class="results-label">Query Results</span>
+                    <span id="result-count"></span>
+                </div>
+                <div id="results-container" class="results-container">
+                    <div class="welcome-message">
+                        <h2>🚀 Welcome to My SQL Portfolio Console!</h2>
+                        <p>Execute queries above or click navigation tabs to explore my background.</p>
+                        <div class="quick-start">
+                            <h3>Quick Start:</h3>
+                            <ul>
+                                <li><code>SELECT * FROM experience;</code> - View my work history</li>
+                                <li><code>SELECT * FROM projects;</code> - See my projects</li>
+                                <li><code>SELECT * FROM skills;</code> - Check my technical skills</li>
+                                <li><code>INSERT INTO contact ...</code> - Get in touch</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script src="data/portfolio.js"></script>
+    <script src="scripts/app.js"></script>
+</body>
+</html>
